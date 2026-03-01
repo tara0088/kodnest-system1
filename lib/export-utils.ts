@@ -3,6 +3,10 @@ import { ResumeData } from './resume-context'
 export function generatePlainText(data: ResumeData): string {
   const lines: string[] = []
 
+  // Template metadata
+  lines.push(`Template: ${data.template}, Accent: ${data.accentColor}`)
+  lines.push('')
+
   // Name & contact
   if (data.personal.name) lines.push(data.personal.name)
   if (data.personal.location) lines.push(data.personal.location)

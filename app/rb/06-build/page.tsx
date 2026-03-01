@@ -80,7 +80,7 @@ export default function Step06Page() {
                 <li>3. Paste the code and build the components</li>
                 <li>4. Test the functionality</li>
                 <li>5. Export the code if needed</li>
-                <li>6. Click "It Worked" when complete</li>
+                <li>6. Click &quot;It Worked&quot; when complete</li>
               </ol>
             </div>
 

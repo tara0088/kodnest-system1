@@ -42,6 +42,7 @@ export interface ResumeData {
     linkedin: string
   }
   template: TemplateType
+  accentColor: string
 }
 
 const defaultResumeData: ResumeData = {
@@ -65,6 +66,7 @@ const defaultResumeData: ResumeData = {
     linkedin: '',
   },
   template: 'Classic',
+  accentColor: 'hsl(168,60%,40%)',
 }
 
 interface ResumeContextType {
@@ -78,6 +80,7 @@ interface ResumeContextType {
   updateSkills: (skills: ResumeData['skills']) => void
   updateLinks: (links: ResumeData['links']) => void
   updateTemplate: (template: TemplateType) => void
+  updateAccentColor: (accentColor: string) => void
   loadSampleData: () => void
 }
 
@@ -92,7 +95,9 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
     const stored = localStorage.getItem('resumeBuilderData')
     if (stored) {
       try {
-        setDataState(JSON.parse(stored))
+        const parsed = JSON.parse(stored)
+        // merge with defaults so new fields (like accentColor or template) are included when migrating
+        setDataState({ ...defaultResumeData, ...parsed })
       } catch (e) {
         console.error('Failed to load resume data', e)
       }
@@ -103,6 +108,11 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
   const setData = (newData: ResumeData) => {
     setDataState(newData)
     localStorage.setItem('resumeBuilderData', JSON.stringify(newData))
+  }
+
+  const updateAccentColor = (accentColor: string) => {
+    const newData = { ...data, accentColor }
+    setData(newData)
   }
 
   const updatePersonal = (personal: ResumeData['personal']) => {
@@ -196,6 +206,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
         linkedin: 'https://linkedin.com/in/sarahjohnson',
       },
       template: data.template || 'Classic',
+      accentColor: data.accentColor || 'hsl(168,60%,40%)',
     }
     setData(sampleData)
   }
@@ -213,6 +224,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
         updateSkills,
         updateLinks,
         updateTemplate,
+        updateAccentColor,
         loadSampleData,
       }}
     >

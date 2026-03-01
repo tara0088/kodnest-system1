@@ -11,7 +11,7 @@ import { ProjectsSection } from '@/components/ProjectsSection'
 import { SkillsSection } from '@/components/SkillsSection'
 import { LinksSection } from '@/components/LinksSection'
 import { ATSScoreDisplay } from '@/components/ATSScoreDisplay'
-import { TemplateSelector } from '@/components/TemplateSelector'
+import { TemplateSelector } from '../../components/TemplateSelector'
 import { useResume } from '@/lib/resume-context'
 
 export default function BuilderPage() {

@@ -20,12 +20,16 @@ export function PreviewPanel() {
   const getHeaderClasses = () => {
     switch (data.template) {
       case 'Modern':
-        return 'text-3xl font-bold text-black uppercase tracking-tight'
+        return 'text-3xl font-bold uppercase tracking-tight'
       case 'Minimal':
-        return 'text-2xl font-semibold text-black'
+        return 'text-2xl font-semibold'
       default:
-        return 'text-3xl font-bold text-black'
+        return 'text-3xl font-bold'
     }
+  }
+
+  const accentStyle: React.CSSProperties = {
+    color: data.accentColor || 'black',
   }
 
   const hasSummary = data.summary && data.summary.trim().length > 0
@@ -45,7 +49,7 @@ export function PreviewPanel() {
         {/* Header */}
         {hasPersonalInfo && (
           <div className="text-center border-b border-gray-300 pb-6">
-            <h1 className={getHeaderClasses()}>{data.personal.name}</h1>
+            <h1 className={getHeaderClasses()} style={accentStyle}>{data.personal.name}</h1>
             <p className="text-gray-600 text-sm mt-2">
               {data.personal.location && `${data.personal.location} • `}
               {data.personal.email || 'email@example.com'}
@@ -64,7 +68,7 @@ export function PreviewPanel() {
         {/* Summary */}
         {hasSummary && (
           <div>
-            <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-2">Summary</h2>
+            <h2 className="text-xs font-bold uppercase tracking-wide mb-2" style={accentStyle}>Summary</h2>
             <p className="text-gray-800 text-sm leading-relaxed">{data.summary}</p>
           </div>
         )}
@@ -72,7 +76,7 @@ export function PreviewPanel() {
         {/* Experience */}
         {hasExperience && (
           <div>
-            <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Experience</h2>
+            <h2 className="text-xs font-bold uppercase tracking-wide mb-3" style={accentStyle}>Experience</h2>
             <div className="space-y-4">
               {data.experience.map((exp, idx) => (
                 <div key={idx} className="avoid-break">
@@ -93,7 +97,7 @@ export function PreviewPanel() {
         {/* Education */}
         {hasEducation && (
           <div>
-            <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Education</h2>
+            <h2 className="text-xs font-bold uppercase tracking-wide mb-3" style={accentStyle}>Education</h2>
             <div className="space-y-3">
               {data.education.map((edu, idx) => (
                 <div key={idx}>
@@ -115,11 +119,15 @@ export function PreviewPanel() {
         {/* Projects */}
         {hasProjects && (
           <div>
-            <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Projects</h2>
+            <h2 className="text-xs font-bold uppercase tracking-wide mb-3" style={accentStyle}>Projects</h2>
             <div className="space-y-4">
               {data.projects.map((proj, idx) => (
-                <div key={idx} className="border border-gray-300 rounded-lg p-4">
-                  <h3 className="font-semibold text-black text-lg">{proj.name || 'Project'}</h3>
+                <div
+                key={idx}
+                className="border rounded-lg p-4"
+                style={{ borderColor: data.accentColor || '#ddd' }}
+              >
+                  <h3 className="font-semibold text-lg" style={accentStyle}>{proj.name || 'Project'}</h3>
                   {proj.description && (
                     <p className="text-gray-700 text-sm mt-2">{proj.description}</p>
                   )}
@@ -153,7 +161,7 @@ export function PreviewPanel() {
         {/* Skills */}
         {(data.skills.technical.length || data.skills.soft.length || data.skills.tools.length) > 0 && (
           <div>
-            <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-2">Skills</h2>
+            <h2 className="text-xs font-bold uppercase tracking-wide mb-2" style={accentStyle}>Skills</h2>
             {/* technical */}
             {data.skills.technical.length > 0 && (
               <div className="mb-2">

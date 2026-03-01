@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { TopNav } from '@/components/TopNav'
-import { TemplateSelector } from '@/components/TemplateSelector'
+import { TemplateSelector } from '../../components/TemplateSelector'
 import { useResume } from '@/lib/resume-context'
 import { generatePlainText } from '../../lib/export-utils'
 
@@ -37,12 +37,16 @@ export default function PreviewPage() {
   const getHeaderClasses = () => {
     switch (data.template) {
       case 'Modern':
-        return 'text-4xl font-extrabold text-black uppercase tracking-tight'
+        return 'text-4xl font-extrabold uppercase tracking-tight'
       case 'Minimal':
-        return 'text-2xl font-semibold text-black'
+        return 'text-2xl font-semibold'
       default:
-        return 'text-4xl font-bold text-black'
+        return 'text-4xl font-bold'
     }
+  }
+
+  const accentStyle: React.CSSProperties = {
+    color: data.accentColor || 'black',
   }
 
   return (
@@ -82,7 +86,7 @@ export default function PreviewPage() {
           <div className={getContainerClasses()}>
             {/* Header */}
             <div className="text-center border-b border-gray-300 pb-8">
-              <h1 className={`${getHeaderClasses()}`}>{data.personal.name || 'Your Name'}</h1>
+              <h1 className={`${getHeaderClasses()}`} style={accentStyle}>{data.personal.name || 'Your Name'}</h1>
               <div className="mt-3 space-y-1">
                 <p className="text-gray-700">
                   {data.personal.location && `${data.personal.location} • `}
@@ -102,7 +106,7 @@ export default function PreviewPage() {
             {/* Summary */}
             {data.summary && (
               <section>
-                <h2 className="text-sm font-bold text-black uppercase tracking-widest mb-3">Professional Summary</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-3" style={accentStyle}>Professional Summary</h2>
                 <p className="text-gray-800 leading-relaxed">{data.summary}</p>
               </section>
             )}
@@ -110,7 +114,7 @@ export default function PreviewPage() {
             {/* Experience */}
             {data.experience.length > 0 && (
               <section>
-                <h2 className="text-sm font-bold text-black uppercase tracking-widest mb-4">Experience</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-4" style={accentStyle}>Experience</h2>
                 <div className="space-y-5">
                   {data.experience.map((exp, idx) => (
                     <div key={idx}>
@@ -133,7 +137,7 @@ export default function PreviewPage() {
             {/* Education */}
             {data.education.length > 0 && (
               <section>
-                <h2 className="text-sm font-bold text-black uppercase tracking-widest mb-4">Education</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-4" style={accentStyle}>Education</h2>
                 <div className="space-y-4">
                   {data.education.map((edu, idx) => (
                     <div key={idx}>
@@ -155,7 +159,7 @@ export default function PreviewPage() {
             {/* Projects */}
             {data.projects.length > 0 && (
               <section>
-                <h2 className="text-sm font-bold text-black uppercase tracking-widest mb-4">Projects</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-4" style={accentStyle}>Projects</h2>
                 <div className="space-y-4">
                   {data.projects.map((proj, idx) => (
                     <div key={idx}>
@@ -175,7 +179,7 @@ export default function PreviewPage() {
             {/* Skills */}
             {(data.skills.technical.length || data.skills.soft.length || data.skills.tools.length) > 0 && (
               <section>
-                <h2 className="text-sm font-bold text-black uppercase tracking-widest mb-3">Skills</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-3" style={accentStyle}>Skills</h2>
                 {/* technical */}
                 {data.skills.technical.length > 0 && (
                   <div className="flex flex-wrap gap-3 mb-2">
