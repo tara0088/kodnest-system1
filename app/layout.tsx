@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ArtifactProvider } from '@/lib/artifact-context'
+import { ResumeProvider } from '@/lib/resume-context'
 
 export const metadata: Metadata = {
   title: 'KodNest Premium Build System',
@@ -16,7 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ArtifactProvider>
-          {children}
+          <ResumeProvider>
+            {children}
+          </ResumeProvider>
         </ArtifactProvider>
       </body>
     </html>
