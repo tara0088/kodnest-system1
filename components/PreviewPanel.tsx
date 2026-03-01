@@ -6,27 +6,38 @@ import { useResume } from '@/lib/resume-context'
 export function PreviewPanel() {
   const { data } = useResume()
 
+  const hasSummary = data.summary && data.summary.trim().length > 0
+  const hasExperience = data.experience.length > 0
+  const hasEducation = data.education.length > 0
+  const hasProjects = data.projects.length > 0
+  const hasSkills = data.skills.length > 0
+  const hasLinks = data.links.github || data.links.linkedin
+  const hasPersonalInfo = data.personal.name && data.personal.name.trim().length > 0
+
   return (
-    <div className="bg-gray-50 border-l border-gray-200 p-8 overflow-y-auto">
+    <div className="bg-gray-50 border-l border-gray-200 p-8 overflow-y-auto h-full">
       <div className="bg-white p-12 min-h-screen space-y-6 max-w-2xl mx-auto shadow-sm">
         {/* Header */}
-        <div className="text-center border-b border-gray-300 pb-6">
-          <h1 className="text-3xl font-bold text-black">{data.personal.name || '[Your Name]'}</h1>
-          <p className="text-gray-600 text-sm mt-2">
-            {data.personal.location && `${data.personal.location} • `}
-            {data.personal.email || 'email@example.com'}
-            {data.personal.phone && ` • ${data.personal.phone}`}
-          </p>
-          {(data.links.github || data.links.linkedin) && (
-            <p className="text-gray-600 text-xs mt-2">
-              {data.links.github && <span>{data.links.github} • </span>}
-              {data.links.linkedin && <span>{data.links.linkedin}</span>}
+        {hasPersonalInfo && (
+          <div className="text-center border-b border-gray-300 pb-6">
+            <h1 className="text-3xl font-bold text-black">{data.personal.name}</h1>
+            <p className="text-gray-600 text-sm mt-2">
+              {data.personal.location && `${data.personal.location} • `}
+              {data.personal.email || 'email@example.com'}
+              {data.personal.phone && ` • ${data.personal.phone}`}
             </p>
-          )}
-        </div>
+            {hasLinks && (
+              <p className="text-gray-600 text-xs mt-2">
+                {data.links.github && <span>{data.links.github}</span>}
+                {data.links.github && data.links.linkedin && <span> • </span>}
+                {data.links.linkedin && <span>{data.links.linkedin}</span>}
+              </p>
+            )}
+          </div>
+        )}
 
         {/* Summary */}
-        {data.summary && (
+        {hasSummary && (
           <div>
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-2">Summary</h2>
             <p className="text-gray-800 text-sm leading-relaxed">{data.summary}</p>
@@ -34,7 +45,7 @@ export function PreviewPanel() {
         )}
 
         {/* Experience */}
-        {data.experience.length > 0 && (
+        {hasExperience && (
           <div>
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Experience</h2>
             <div className="space-y-4">
@@ -55,7 +66,7 @@ export function PreviewPanel() {
         )}
 
         {/* Education */}
-        {data.education.length > 0 && (
+        {hasEducation && (
           <div>
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Education</h2>
             <div className="space-y-3">
@@ -64,7 +75,7 @@ export function PreviewPanel() {
                   <div className="flex justify-between items-start">
                     <div>
                       <p className="font-semibold text-black">
-                        {edu.degree || '[Degree]'} in {edu.field || '[Field]'}
+                        {edu.degree || '[Degree]'} {edu.field ? `in ${edu.field}` : ''}
                       </p>
                       <p className="text-gray-600 text-sm">{edu.school || '[School]'}</p>
                     </div>
@@ -77,7 +88,7 @@ export function PreviewPanel() {
         )}
 
         {/* Projects */}
-        {data.projects.length > 0 && (
+        {hasProjects && (
           <div>
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Projects</h2>
             <div className="space-y-3">
@@ -95,7 +106,7 @@ export function PreviewPanel() {
         )}
 
         {/* Skills */}
-        {data.skills.length > 0 && (
+        {hasSkills && (
           <div>
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-2">Skills</h2>
             <div className="flex flex-wrap gap-2">
@@ -108,8 +119,23 @@ export function PreviewPanel() {
           </div>
         )}
 
+        {/* Links */}
+        {hasLinks && !hasPersonalInfo && (
+          <div>
+            <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-2">Links</h2>
+            <div className="space-y-1">
+              {data.links.github && (
+                <p className="text-gray-600 text-sm truncate">{data.links.github}</p>
+              )}
+              {data.links.linkedin && (
+                <p className="text-gray-600 text-sm truncate">{data.links.linkedin}</p>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Placeholder */}
-        {!data.personal.name && (
+        {!hasPersonalInfo && (
           <div className="text-center py-12">
             <p className="text-gray-400 text-sm">Start filling in your information to see preview</p>
           </div>

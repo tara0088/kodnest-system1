@@ -73,7 +73,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Load from localStorage on mount
-    const stored = localStorage.getItem('resume_data')
+    const stored = localStorage.getItem('resumeBuilderData')
     if (stored) {
       try {
         setDataState(JSON.parse(stored))
@@ -86,7 +86,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
 
   const setData = (newData: ResumeData) => {
     setDataState(newData)
-    localStorage.setItem('resume_data', JSON.stringify(newData))
+    localStorage.setItem('resumeBuilderData', JSON.stringify(newData))
   }
 
   const updatePersonal = (personal: ResumeData['personal']) => {
