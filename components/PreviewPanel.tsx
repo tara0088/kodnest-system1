@@ -72,7 +72,7 @@ export function PreviewPanel() {
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Experience</h2>
             <div className="space-y-4">
               {data.experience.map((exp, idx) => (
-                <div key={idx}>
+                <div key={idx} className="avoid-break">
                   <div className="flex justify-between items-start">
                     <div>
                       <p className="font-semibold text-black">{exp.position || '[Position]'}</p>
@@ -115,7 +115,7 @@ export function PreviewPanel() {
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Projects</h2>
             <div className="space-y-3">
               {data.projects.map((proj, idx) => (
-                <div key={idx}>
+                <div key={idx} className="avoid-break">
                   <p className="font-semibold text-black">{proj.name || '[Project Name]'}</p>
                   {proj.description && <p className="text-gray-700 text-sm">{proj.description}</p>}
                   {proj.link && (

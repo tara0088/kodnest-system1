@@ -4,9 +4,24 @@ import React from 'react'
 import { TopNav } from '@/components/TopNav'
 import { TemplateSelector } from '@/components/TemplateSelector'
 import { useResume } from '@/lib/resume-context'
+import { generatePlainText } from '../../lib/export-utils'
+
 
 export default function PreviewPage() {
   const { data } = useResume()
+
+  const validationWarning = !data.personal.name || (data.projects.length === 0 && data.experience.length === 0)
+
+  const copyText = async () => {
+    try {
+      const text = generatePlainText(data)
+      await navigator.clipboard.writeText(text)
+      alert('Resume text copied to clipboard!')
+    } catch (e) {
+      console.error('Copy failed', e)
+      alert('Failed to copy text')
+    }
+  }
 
   const getContainerClasses = () => {
     switch (data.template) {
@@ -36,9 +51,34 @@ export default function PreviewPage() {
       <main className="min-h-screen bg-gray-100 pt-16 pb-8">
         <div className="max-w-4xl mx-auto">
           {/* template selector */}
-          <div className="px-4">
+          <div className="px-4 no-print">
             <TemplateSelector />
           </div>
+
+          {/* export toolbar */}
+          <div className="px-4 no-print mb-4 flex justify-end gap-2">
+            <button
+              onClick={() => window.print()}
+              className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-50 transition"
+            >
+              Print / Save as PDF
+            </button>
+            <button
+              onClick={copyText}
+              className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-700 hover:bg-gray-50 transition"
+            >
+              Copy Resume as Text
+            </button>
+          </div>
+
+          {validationWarning && (
+            <div className="px-4 no-print mb-2">
+              <p className="text-xs text-yellow-600">
+                ⚠️ Your resume may look incomplete.
+              </p>
+            </div>
+          )}
+
           <div className={getContainerClasses()}>
             {/* Header */}
             <div className="text-center border-b border-gray-300 pb-8">

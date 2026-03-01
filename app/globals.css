@@ -35,3 +35,23 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #505050;
 }
+
+/* print styling */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  @page {
+    margin: 1in;
+  }
+}
