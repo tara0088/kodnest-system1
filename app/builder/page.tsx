@@ -10,6 +10,7 @@ import { ExperienceSection } from '@/components/ExperienceSection'
 import { ProjectsSection } from '@/components/ProjectsSection'
 import { SkillsSection } from '@/components/SkillsSection'
 import { LinksSection } from '@/components/LinksSection'
+import { ATSScoreDisplay } from '@/components/ATSScoreDisplay'
 import { useResume } from '@/lib/resume-context'
 
 export default function BuilderPage() {
@@ -32,6 +33,9 @@ export default function BuilderPage() {
               </button>
             </div>
 
+            {/* ATS Score Display */}
+            <ATSScoreDisplay />
+
             <PersonalInfoSection />
             <SummarySection />
             <EducationSection />
@@ -42,7 +46,7 @@ export default function BuilderPage() {
 
             <div className="pb-8">
               <p className="text-xs text-gray-500">
-                💾 Your resume is automatically saved. No ATS scoring yet - this is a skeleton builder.
+                💾 Your resume is automatically saved. Review your ATS score above to optimize for applicant tracking systems.
               </p>
             </div>
           </div>
