@@ -51,8 +51,12 @@ export function calculateATSScore(data: ResumeData): ATSScore {
     breakdown.experience = 10
   }
 
-  // 4. Skills (10 points) - if 8+ items
-  if (data.skills.length >= 8) {
+  // 4. Skills (10 points) - if 8+ total items
+  const totalSkills =
+    data.skills.technical.length +
+    data.skills.soft.length +
+    data.skills.tools.length
+  if (totalSkills >= 8) {
     score += 10
     breakdown.skills = 10
   }
@@ -163,8 +167,12 @@ export function generateATSSuggestions(data: ResumeData, score: ATSScore): ATSSu
 
   // Suggestion 4: Skills
   if (score.breakdown.skills === 0) {
+    const totalSkills =
+      data.skills.technical.length +
+      data.skills.soft.length +
+      data.skills.tools.length
     suggestions.push({
-      text: `Add more skills (target 8+, you have ${data.skills.length}). +10 points.`,
+      text: `Add more skills (target 8+, you have ${totalSkills}). +10 points.`,
       impact: 'medium',
     })
   }
@@ -215,8 +223,12 @@ export function generateImprovementSuggestions(data: ResumeData): string[] {
   if (data.summary.trim().split(/\s+/).length < 40) {
     improvements.push('Expand your summary to 40+ words.')
   }
-  if (data.skills.length < 8) {
-    improvements.push('List eight or more technical skills.')
+  const totalSkills2 =
+    data.skills.technical.length +
+    data.skills.soft.length +
+    data.skills.tools.length
+  if (totalSkills2 < 8) {
+    improvements.push('List eight or more skills overall.')
   }
   if (data.experience.length === 0) {
     improvements.push('Add internship or project work under experience.')

@@ -32,7 +32,10 @@ export function PreviewPanel() {
   const hasExperience = data.experience.length > 0
   const hasEducation = data.education.length > 0
   const hasProjects = data.projects.length > 0
-  const hasSkills = data.skills.length > 0
+  const hasSkills =
+    data.skills.technical.length > 0 ||
+    data.skills.soft.length > 0 ||
+    data.skills.tools.length > 0
   const hasLinks = data.links.github || data.links.linkedin
   const hasPersonalInfo = data.personal.name && data.personal.name.trim().length > 0
 
@@ -113,14 +116,34 @@ export function PreviewPanel() {
         {hasProjects && (
           <div>
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-3">Projects</h2>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {data.projects.map((proj, idx) => (
-                <div key={idx} className="avoid-break">
-                  <p className="font-semibold text-black">{proj.name || '[Project Name]'}</p>
-                  {proj.description && <p className="text-gray-700 text-sm">{proj.description}</p>}
-                  {proj.link && (
-                    <p className="text-gray-600 text-xs mt-1 truncate">{proj.link}</p>
+                <div key={idx} className="border border-gray-300 rounded-lg p-4">
+                  <h3 className="font-semibold text-black text-lg">{proj.name || 'Project'}</h3>
+                  {proj.description && (
+                    <p className="text-gray-700 text-sm mt-2">{proj.description}</p>
                   )}
+                  {proj.techStack && proj.techStack.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {proj.techStack.map((tech, tIdx) => (
+                        <span key={tIdx} className="bg-gray-200 px-3 py-1 rounded text-xs text-gray-800">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <div className="mt-2 flex gap-3 text-gray-600 text-xs">
+                    {proj.liveUrl && (
+                      <a href={proj.liveUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                        Live
+                      </a>
+                    )}
+                    {proj.githubUrl && (
+                      <a href={proj.githubUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                        GitHub
+                      </a>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -128,16 +151,48 @@ export function PreviewPanel() {
         )}
 
         {/* Skills */}
-        {hasSkills && (
+        {(data.skills.technical.length || data.skills.soft.length || data.skills.tools.length) > 0 && (
           <div>
             <h2 className="text-xs font-bold text-black uppercase tracking-wide mb-2">Skills</h2>
-            <div className="flex flex-wrap gap-2">
-              {data.skills.map((skill, idx) => (
-                <span key={idx} className="bg-gray-200 px-3 py-1 rounded text-xs text-gray-800">
-                  {skill}
-                </span>
-              ))}
-            </div>
+            {/* technical */}
+            {data.skills.technical.length > 0 && (
+              <div className="mb-2">
+                <p className="text-xs font-semibold text-gray-700">Technical Skills</p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {data.skills.technical.map((skill, idx) => (
+                    <span key={idx} className="bg-gray-200 px-3 py-1 rounded text-xs text-gray-800">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* soft */}
+            {data.skills.soft.length > 0 && (
+              <div className="mb-2">
+                <p className="text-xs font-semibold text-gray-700">Soft Skills</p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {data.skills.soft.map((skill, idx) => (
+                    <span key={idx} className="bg-gray-200 px-3 py-1 rounded text-xs text-gray-800">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* tools */}
+            {data.skills.tools.length > 0 && (
+              <div className="mb-2">
+                <p className="text-xs font-semibold text-gray-700">Tools & Technologies</p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {data.skills.tools.map((skill, idx) => (
+                    <span key={idx} className="bg-gray-200 px-3 py-1 rounded text-xs text-gray-800">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 

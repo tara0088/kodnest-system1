@@ -173,16 +173,48 @@ export default function PreviewPage() {
             )}
 
             {/* Skills */}
-            {data.skills.length > 0 && (
+            {(data.skills.technical.length || data.skills.soft.length || data.skills.tools.length) > 0 && (
               <section>
                 <h2 className="text-sm font-bold text-black uppercase tracking-widest mb-3">Skills</h2>
-                <div className="flex flex-wrap gap-3">
-                  {data.skills.map((skill, idx) => (
-                    <span key={idx} className="px-4 py-2 bg-gray-100 text-gray-800 rounded text-sm">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+                {/* technical */}
+                {data.skills.technical.length > 0 && (
+                  <div className="flex flex-wrap gap-3 mb-2">
+                    {data.skills.technical.map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className="px-4 py-2 bg-gray-100 text-gray-800 rounded text-sm"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {/* soft */}
+                {data.skills.soft.length > 0 && (
+                  <div className="flex flex-wrap gap-3 mb-2">
+                    {data.skills.soft.map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className="px-4 py-2 bg-gray-100 text-gray-800 rounded text-sm"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {/* tools */}
+                {data.skills.tools.length > 0 && (
+                  <div className="flex flex-wrap gap-3">
+                    {data.skills.tools.map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className="px-4 py-2 bg-gray-100 text-gray-800 rounded text-sm"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </section>
             )}
 

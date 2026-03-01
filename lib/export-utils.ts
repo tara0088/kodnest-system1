@@ -47,15 +47,31 @@ export function generatePlainText(data: ResumeData): string {
     data.projects.forEach((proj) => {
       lines.push(proj.name || '')
       if (proj.description) lines.push(proj.description)
-      if (proj.link) lines.push(proj.link)
+      if (proj.techStack && proj.techStack.length > 0) {
+        lines.push('Tech: ' + proj.techStack.join(', '))
+      }
+      if (proj.liveUrl) lines.push(`Live: ${proj.liveUrl}`)
+      if (proj.githubUrl) lines.push(`GitHub: ${proj.githubUrl}`)
       lines.push('')
     })
   }
 
   // Skills
-  if (data.skills.length > 0) {
+  if (
+    data.skills.technical.length > 0 ||
+    data.skills.soft.length > 0 ||
+    data.skills.tools.length > 0
+  ) {
     lines.push('Skills:')
-    lines.push(data.skills.join(', '))
+    if (data.skills.technical.length > 0) {
+      lines.push('Technical: ' + data.skills.technical.join(', '))
+    }
+    if (data.skills.soft.length > 0) {
+      lines.push('Soft: ' + data.skills.soft.join(', '))
+    }
+    if (data.skills.tools.length > 0) {
+      lines.push('Tools: ' + data.skills.tools.join(', '))
+    }
     lines.push('')
   }
 

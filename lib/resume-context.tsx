@@ -28,8 +28,15 @@ export interface ResumeData {
     name: string
     description: string
     link: string
+    techStack: string[]
+    liveUrl: string
+    githubUrl: string
   }>
-  skills: string[]
+  skills: {
+    technical: string[]
+    soft: string[]
+    tools: string[]
+  }
   links: {
     github: string
     linkedin: string
@@ -48,7 +55,11 @@ const defaultResumeData: ResumeData = {
   education: [],
   experience: [],
   projects: [],
-  skills: [],
+  skills: {
+    technical: [],
+    soft: [],
+    tools: [],
+  },
   links: {
     github: '',
     linkedin: '',
@@ -64,7 +75,7 @@ interface ResumeContextType {
   updateEducation: (education: ResumeData['education']) => void
   updateExperience: (experience: ResumeData['experience']) => void
   updateProjects: (projects: ResumeData['projects']) => void
-  updateSkills: (skills: string[]) => void
+  updateSkills: (skills: ResumeData['skills']) => void
   updateLinks: (links: ResumeData['links']) => void
   updateTemplate: (template: TemplateType) => void
   loadSampleData: () => void
@@ -119,7 +130,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
     setData(newData)
   }
 
-  const updateSkills = (skills: string[]) => {
+  const updateSkills = (skills: ResumeData['skills']) => {
     const newData = { ...data, skills }
     setData(newData)
   }
@@ -170,9 +181,16 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
           name: 'AI Resume Builder',
           description: 'Premium web application for creating professional resumes with live preview.',
           link: 'https://github.com/example/resume-builder',
+          techStack: ['React', 'TypeScript', 'Next.js'],
+          liveUrl: '',
+          githubUrl: 'https://github.com/example/resume-builder',
         },
       ],
-      skills: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Tailwind CSS', 'Next.js', 'AWS', 'Docker'],
+      skills: {
+        technical: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'GraphQL'],
+        soft: ['Team Leadership', 'Problem Solving'],
+        tools: ['Git', 'Docker', 'AWS'],
+      },
       links: {
         github: 'https://github.com/sarahjohnson',
         linkedin: 'https://linkedin.com/in/sarahjohnson',
