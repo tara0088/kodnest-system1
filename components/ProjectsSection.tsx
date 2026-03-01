@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useResume } from '@/lib/resume-context'
+import { getBulletGuidance } from '@/lib/bullet-guidance'
 
 export function ProjectsSection() {
   const { data, updateProjects } = useResume()
@@ -75,6 +76,13 @@ export function ProjectsSection() {
                   rows={2}
                   className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-black resize-none"
                 />
+                {proj.description && (
+                  <ul className="mt-1 text-xs text-gray-500 space-y-1">
+                    {getBulletGuidance(proj.description).map((msg, i) => (
+                      <li key={i}>{msg}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
               <div>

@@ -6,6 +6,28 @@ import { useResume } from '@/lib/resume-context'
 export function PreviewPanel() {
   const { data } = useResume()
 
+  const getContainerClasses = () => {
+    switch (data.template) {
+      case 'Modern':
+        return 'bg-white p-12 min-h-screen space-y-8 max-w-2xl mx-auto shadow-lg'
+      case 'Minimal':
+        return 'bg-white p-8 min-h-screen space-y-4 max-w-2xl mx-auto'
+      default:
+        return 'bg-white p-12 min-h-screen space-y-6 max-w-2xl mx-auto shadow-sm'
+    }
+  }
+
+  const getHeaderClasses = () => {
+    switch (data.template) {
+      case 'Modern':
+        return 'text-3xl font-bold text-black uppercase tracking-tight'
+      case 'Minimal':
+        return 'text-2xl font-semibold text-black'
+      default:
+        return 'text-3xl font-bold text-black'
+    }
+  }
+
   const hasSummary = data.summary && data.summary.trim().length > 0
   const hasExperience = data.experience.length > 0
   const hasEducation = data.education.length > 0
@@ -16,11 +38,11 @@ export function PreviewPanel() {
 
   return (
     <div className="bg-gray-50 border-l border-gray-200 p-8 overflow-y-auto h-full">
-      <div className="bg-white p-12 min-h-screen space-y-6 max-w-2xl mx-auto shadow-sm">
+      <div className={getContainerClasses()}>
         {/* Header */}
         {hasPersonalInfo && (
           <div className="text-center border-b border-gray-300 pb-6">
-            <h1 className="text-3xl font-bold text-black">{data.personal.name}</h1>
+            <h1 className={getHeaderClasses()}>{data.personal.name}</h1>
             <p className="text-gray-600 text-sm mt-2">
               {data.personal.location && `${data.personal.location} • `}
               {data.personal.email || 'email@example.com'}

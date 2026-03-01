@@ -2,20 +2,47 @@
 
 import React from 'react'
 import { TopNav } from '@/components/TopNav'
+import { TemplateSelector } from '@/components/TemplateSelector'
 import { useResume } from '@/lib/resume-context'
 
 export default function PreviewPage() {
   const { data } = useResume()
+
+  const getContainerClasses = () => {
+    switch (data.template) {
+      case 'Modern':
+        return 'bg-white p-20 shadow-xl space-y-10'
+      case 'Minimal':
+        return 'bg-white p-10 space-y-4'
+      default:
+        return 'bg-white p-16 shadow-lg space-y-8'
+    }
+  }
+
+  const getHeaderClasses = () => {
+    switch (data.template) {
+      case 'Modern':
+        return 'text-4xl font-extrabold text-black uppercase tracking-tight'
+      case 'Minimal':
+        return 'text-2xl font-semibold text-black'
+      default:
+        return 'text-4xl font-bold text-black'
+    }
+  }
 
   return (
     <>
       <TopNav />
       <main className="min-h-screen bg-gray-100 pt-16 pb-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white p-16 shadow-lg space-y-8">
+          {/* template selector */}
+          <div className="px-4">
+            <TemplateSelector />
+          </div>
+          <div className={getContainerClasses()}>
             {/* Header */}
             <div className="text-center border-b border-gray-300 pb-8">
-              <h1 className="text-4xl font-bold text-black">{data.personal.name || 'Your Name'}</h1>
+              <h1 className={`${getHeaderClasses()}`}>{data.personal.name || 'Your Name'}</h1>
               <div className="mt-3 space-y-1">
                 <p className="text-gray-700">
                   {data.personal.location && `${data.personal.location} • `}

@@ -86,7 +86,7 @@ export function calculateATSScore(data: ResumeData): ATSScore {
   }
 }
 
-function checkMeasurableImpact(data: ResumeData): boolean {
+export function checkMeasurableImpact(data: ResumeData): boolean {
   const numberRegex = /\d+%|\d+x|\d+k|\d+\s*[a-z]*%|\d+\s*[a-z]*x|\d+k/i
 
   // Check experience descriptions
@@ -200,4 +200,27 @@ export function generateATSSuggestions(data: ResumeData, score: ATSScore): ATSSu
       return impactOrder[a.impact] - impactOrder[b.impact]
     })
     .slice(0, 3)
+}
+
+// New: generate top improvement suggestions based on missing elements
+export function generateImprovementSuggestions(data: ResumeData): string[] {
+  const improvements: string[] = []
+
+  if (data.projects.length < 2) {
+    improvements.push('Add at least two projects to showcase your work.')
+  }
+  if (!checkMeasurableImpact(data)) {
+    improvements.push('Include measurable impact (numbers) in experience or projects.')
+  }
+  if (data.summary.trim().split(/\s+/).length < 40) {
+    improvements.push('Expand your summary to 40+ words.')
+  }
+  if (data.skills.length < 8) {
+    improvements.push('List eight or more technical skills.')
+  }
+  if (data.experience.length === 0) {
+    improvements.push('Add internship or project work under experience.')
+  }
+
+  return improvements.slice(0, 3)
 }

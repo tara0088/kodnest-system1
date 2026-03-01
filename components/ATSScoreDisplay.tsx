@@ -2,13 +2,14 @@
 
 import React from 'react'
 import { useResume } from '@/lib/resume-context'
-import { calculateATSScore, generateATSSuggestions } from '@/lib/ats-scoring'
+import { calculateATSScore, generateATSSuggestions, generateImprovementSuggestions } from '@/lib/ats-scoring'
 
 export function ATSScoreDisplay() {
   const { data } = useResume()
 
   const atsScore = calculateATSScore(data)
   const suggestions = generateATSSuggestions(data, atsScore)
+  const improvements = generateImprovementSuggestions(data)
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-green-600'
@@ -72,6 +73,18 @@ export function ATSScoreDisplay() {
                   <span className="text-gray-600">•</span>
                   <span className="text-gray-700">{suggestion.text}</span>
                 </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Improvement Panel */}
+        {improvements.length > 0 && (
+          <div className="border-t border-gray-300 pt-4">
+            <h4 className="text-sm font-semibold text-gray-700 mb-2">Top 3 Improvements</h4>
+            <ul className="list-disc list-inside text-xs text-gray-600 space-y-1">
+              {improvements.map((imp, idx) => (
+                <li key={idx}>{imp}</li>
               ))}
             </ul>
           </div>

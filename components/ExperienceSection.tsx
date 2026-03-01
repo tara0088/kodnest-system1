@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useResume } from '@/lib/resume-context'
+import { getBulletGuidance } from '@/lib/bullet-guidance'
 
 export function ExperienceSection() {
   const { data, updateExperience } = useResume()
@@ -99,6 +100,14 @@ export function ExperienceSection() {
                   rows={3}
                   className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-black resize-none"
                 />
+                {/* bullet guidance suggestions */}
+                {exp.description && (
+                  <ul className="mt-1 text-xs text-gray-500 space-y-1">
+                    {getBulletGuidance(exp.description).map((msg, i) => (
+                      <li key={i}>{msg}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           </div>

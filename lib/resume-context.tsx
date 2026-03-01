@@ -2,6 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
 
+export type TemplateType = 'Classic' | 'Modern' | 'Minimal'
+
 export interface ResumeData {
   personal: {
     name: string
@@ -32,6 +34,7 @@ export interface ResumeData {
     github: string
     linkedin: string
   }
+  template: TemplateType
 }
 
 const defaultResumeData: ResumeData = {
@@ -50,6 +53,7 @@ const defaultResumeData: ResumeData = {
     github: '',
     linkedin: '',
   },
+  template: 'Classic',
 }
 
 interface ResumeContextType {
@@ -62,6 +66,7 @@ interface ResumeContextType {
   updateProjects: (projects: ResumeData['projects']) => void
   updateSkills: (skills: string[]) => void
   updateLinks: (links: ResumeData['links']) => void
+  updateTemplate: (template: TemplateType) => void
   loadSampleData: () => void
 }
 
@@ -124,6 +129,11 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
     setData(newData)
   }
 
+  const updateTemplate = (template: TemplateType) => {
+    const newData = { ...data, template }
+    setData(newData)
+  }
+
   const loadSampleData = () => {
     const sampleData: ResumeData = {
       personal: {
@@ -167,6 +177,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
         github: 'https://github.com/sarahjohnson',
         linkedin: 'https://linkedin.com/in/sarahjohnson',
       },
+      template: data.template || 'Classic',
     }
     setData(sampleData)
   }
@@ -183,6 +194,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
         updateProjects,
         updateSkills,
         updateLinks,
+        updateTemplate,
         loadSampleData,
       }}
     >

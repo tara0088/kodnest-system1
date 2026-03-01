@@ -205,7 +205,7 @@
 
 ### Test 4: Live Preview Integration
 
-**Objective:** Verify that the right-side live preview updates with score-relevant data.
+**Objective:** Verify that the right-side live preview updates with score-relevant data and respects templates.
 
 **Steps:**
 
@@ -234,6 +234,49 @@
    - Only "Personal Info" section should render
    - Others should be hidden
    - Shows "Start filling in your information" placeholder
+
+5. **Template Switching**
+   - Use tabs at top of builder preview or preview page to toggle between Classic, Modern, Minimal
+   - Confirm layout, spacing and header style change accordingly
+   - Check that resume content remains the same and score does not change
+
+---
+
+### Test 5: Bullet Structure Guidance
+
+**Objective:** Ensure inline suggestions appear in experience/projects descriptions when bullets lack action verbs or numbers.
+
+**Steps:**
+
+1. **Add an experience entry** that has a description like "worked on feature" (no verb at start, no numbers)
+   - You should see small gray text below the textarea:
+     - "Bullet 1: Start with a strong action verb."
+     - "Bullet 1: Add measurable impact (numbers)."
+
+2. **Add another line (press Enter) in the same textarea** with "Improved load time by 20%" - the suggestions should update to only show the first bullet warning, not the second.
+
+3. **Open a project entry** and repeat; similar guidance should appear beneath the project description field.
+
+4. **Guidance should not block typing** and disappears when requirements are met.
+
+---
+
+### Test 6: Top 3 Improvements Panel
+
+**Objective:** Verify the new improvement panel below the ATS score provides contextual advice.
+
+**Steps:**
+
+1. **Start with an empty resume**; panel should list up to three of the following depending on conditions:
+   - "Add at least two projects to showcase your work."
+   - "Include measurable impact (numbers) in experience or projects."
+   - "Expand your summary to 40+ words."
+   - "List eight or more technical skills."
+   - "Add internship or project work under experience."
+
+2. **Modify data to satisfy one condition** (for example, add two projects) and refresh suggestions; the replaced suggestion should update accordingly.
+
+3. **Ensure the panel always shows at most three items** and the ATS score itself remains unaffected.
 
 ---
 
